@@ -3,13 +3,10 @@
 for dir in Named_Snaps Named_Titles Named_Boxarts Named_Logos; do
     [ -d "$dir" ] || continue
     for file in "$dir"/*; do
-    [ -f "$file" ] || continue
-    
-    old=$(basename "$file")
-    
-    new=$(echo "$old" | sed -E 's/^([^)]*\([^)]*\)).*(\.[^.]*)$/\1\2/')
-    
-    [ "$old" != "$new" ] && [ ! -e "$(dirname "$file")/$new" ] && mv "$file" "$(dirname "$file")/$new" && echo "$old -> $new"
+        [ -f "$file" ] || continue
+        old=$(basename "$file")
+        new=$(echo "$old" | sed -E 's/^([^)]*\([^)]*\)).*(\.[^.]*)$/\1\2/')
+        [ "$old" != "$new" ] && mv "$file" "$(dirname "$file")/$new" && echo "$old -> $new"
     done
 done
 
