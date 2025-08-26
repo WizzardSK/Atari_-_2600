@@ -5,7 +5,7 @@ cd "$GITHUB_WORKSPACE/Named_Snaps"
 for file in "${1:-.}"/*; do
     [ -f "$file" ] || continue    
     old=$(basename "$file")
-    new=$(echo "$old" | sed 's/\[[^]]*\]//g; s/{[^}]*}//g; s/(/###FIRST###/; s/([^)]*)//g; s/###FIRST###/(/; s/  */ /g; s/^ *//; s/ *$//')
+    new=$(echo "$old" | sed 's/\[[^]]*\]//g; s/{[^}]*}//g; s/(/###FIRST###/; s/([^)]*)//g; s/###FIRST###/(/; s/  */ /g; s/^ *//; s/ *$//; s/ \././')
     [ "$old" != "$new" ] && [ ! -e "$(dirname "$file")/$new" ] && mv "$file" "$(dirname "$file")/$new" && echo "$old -> $new"
 done
 
