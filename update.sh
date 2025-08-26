@@ -2,6 +2,7 @@
 
 for dir in Named_Snaps Named_Titles Named_Boxarts Named_Logos; do
     [ -d "$dir" ] || continue
+    find "$dir" -type l -exec rm -f {} +
     for file in "$dir"/*; do
         [ -f "$file" ] || continue
         old=$(basename "$file")
