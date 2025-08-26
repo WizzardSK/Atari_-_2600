@@ -1,19 +1,15 @@
 #!/bin/bash
 
-cd "$GITHUB_WORKSPACE/Named_Snaps"
-
-for file in "${1:-.}"/*; do
-    [ -f "$file" ] || continue    
-    old=$(basename "$file")
-    new=$(echo "$old" | sed 's/\([^(]*([^)]*)\).*\(\.[^.]*\)$/\1\2/')
-    [ "$old" != "$new" ] && [ ! -e "$(dirname "$file")/$new" ] && mv "$file" "$(dirname "$file")/$new" && echo "$old -> $new"
+for dir in Named_Snaps Named_Titles Named_Boxarts Named_Logos; do
+    [ -d "$dir" ] || continue
+    for file in "$dir"/*; do
+        [ -f "$file" ] || continue    
+        old=$(basename "$file")
+        new=$(echo "$old" | sed 's/\([^(]*([^)]*)\).*\(\.[^.]*\)$/\1\2/')
+        [ "$old" != "$new" ] && [ ! -e "$(dirname "$file")/$new" ] && mv "$file" "$(dirname "$file")/$new" && echo "$old -> $new"
+    done
 done
 
-cd "$GITHUB_WORKSPACE/Named_Titles"
-cd "$GITHUB_WORKSPACE/Named_Boxarts"
-cd "$GITHUB_WORKSPACE/Named_Logos"
-
-cd "$GITHUB_WORKSPACE"
 git add .
 git config --global user.name "GitHub Actions"
 git config --global user.email "actions@github.com"
