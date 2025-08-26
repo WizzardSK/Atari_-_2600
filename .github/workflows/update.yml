@@ -10,6 +10,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        
+      - name: Download script
+        run: curl -o thumbs.sh https://raw.githubusercontent.com/WizzardSK/gameflix/refs/heads/main/thumbs.sh
 
       - name: Run script
-        run: bash update.sh
+        run: bash thumbs.sh
