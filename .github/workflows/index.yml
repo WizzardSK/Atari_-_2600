@@ -1,18 +1,21 @@
-name: Indexer
+name: Generate Directory Listings
 
 on:
-  workflow_dispatch: 
+  push:
+    branches:
+      - main
 
 jobs:
-  build:
+  generate-index:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        
-      - name: Download script
-        run: curl -o index.sh https://raw.githubusercontent.com/WizzardSK/gameflix/refs/heads/main/index.sh
-
-      - name: Run script
-        run: bash index.sh
+      - uses: actions/checkout@v3
+      - uses: gacts/directory-listing@v1
+        with:
+          target: ./assets
+          ignore: |
+            build/**
+            **/index.html
+            node_modules/**,**/*.log
+          show-hidden: true
+          overwrite: true
